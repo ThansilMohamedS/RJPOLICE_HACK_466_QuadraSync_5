@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spam Call Report Form</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #formContainer {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 400px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-bottom: 8px;
+    }
+
+    input, select, textarea {
+      padding: 8px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="formContainer">
+    <h2>Spam Call Report Form</h2>
+
+    <form id="spamReportForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="mobileNo">Mobile Number:</label>
+      <input type="tel" id="mobileNo" name="mobileNo" pattern="[0-9]{10}" required>
+
+      <label for="spamNo">Spam Number:</label>
+      <input type="tel" id="spamNo" name="spamNo" pattern="[0-9]{10}" required>
+
+      <label for="date">Date of Call:</label>
+      <input type="date" id="date" name="date" required>
+
+      <label for="time">Time of Call:</label>
+      <input type="time" id="time" name="time" required>
+
+      <label for="reportSpam">Report Spam:</label>
+      <select id="reportSpam" name="reportSpam" required>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+
+      <label for="comments">Additional Comments:</label>
+      <textarea id="comments" name="comments" rows="4"></textarea>
+
+      <button type="button" onclick="saveSpamReport()">Submit Report</button>
+    </form>
+  </div>
+
+  <script>
+    function saveSpamReport() {
+      var name = document.getElementById('name').value;
+      var mobileNo = document.getElementById('mobileNo').value;
+      var spamNo = document.getElementById('spamNo').value;
+      var date = document.getElementById('date').value;
+      var time = document.getElementById('time').value;
+      var reportSpam = document.getElementById('reportSpam').value;
+      var comments = document.getElementById('comments').value;
+
+      var currentReport = {
+        name: name,
+        mobileNo: mobileNo,
+        spamNo: spamNo,
+        date: date,
+        time: time,
+        reportSpam: reportSpam,
+        comments: comments
+      };
+
+
+      var existingReports = JSON.parse(localStorage.getItem('spamReports')) || [];
+
+      existingReports.push(currentReport);
+
+      localStorage.setItem('spamReports', JSON.stringify(existingReports));
+
+      document.getElementById('spamReportForm').reset();
+
+      alert('Spam report saved!');
+    }
+  </script>
+
+</body>
+</html>
